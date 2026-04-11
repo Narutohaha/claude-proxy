@@ -4,5 +4,4 @@ data/
 *.db
 *.log
 .env
-config.yaml
 .claude
