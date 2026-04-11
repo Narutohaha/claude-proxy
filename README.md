@@ -124,7 +124,7 @@ Configure in Claude Code's settings.json (located at `~/.claude/settings.json` o
 After starting the server, access the built-in Web UI dashboard:
 
 ```
-http://localhost:3456/ui
+http://localhost:3456
 ```
 
 ### Features
@@ -389,7 +389,7 @@ claude
 启动服务后，访问内置的 Web UI 仪表盘：
 
 ```
-http://localhost:3456/ui
+http://localhost:3456
 ```
 
 ### 功能特点
