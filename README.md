@@ -119,6 +119,25 @@ Configure in Claude Code's settings.json (located at `~/.claude/settings.json` o
 }
 ```
 
+## Web UI Dashboard
+
+After starting the server, access the built-in Web UI dashboard:
+
+```
+http://localhost:3456/ui
+```
+
+### Features
+
+- 📊 **Statistics Overview** - View total requests, tokens, and latency metrics
+- 📋 **Request History** - Browse all proxied requests with timestamps
+- 🔍 **Request Details** - Inspect request/response payloads in raw or parsed view
+- 📈 **Model Distribution** - See usage breakdown by model
+
+### Screenshot
+
+The dashboard provides a clean interface to monitor your Claude Code usage and debug requests.
+
 ## Custom Model Configuration
 
 ### Configuration Fields
@@ -364,6 +383,25 @@ claude
   "includeCoAuthoredBy": false
 }
 ```
+
+## Web UI 仪表盘
+
+启动服务后，访问内置的 Web UI 仪表盘：
+
+```
+http://localhost:3456/ui
+```
+
+### 功能特点
+
+- 📊 **统计概览** - 查看总请求数、Token 用量和延迟指标
+- 📋 **请求历史** - 浏览所有代理请求及时间戳
+- 🔍 **请求详情** - 检查请求/响应数据（原始或解析视图）
+- 📈 **模型分布** - 查看各模型使用情况分布
+
+### 截图
+
+仪表盘提供了简洁的界面，用于监控 Claude Code 使用情况和调试请求。
 
 ## 自定义模型配置
 
