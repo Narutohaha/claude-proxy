@@ -18,13 +18,13 @@ providers:
   jdcloud:
     type: "anthropic"
     base_url: "https://modelservice.jdcloud.com/coding/anthropic"
-    api_key: ""
+    api_key: "<API_KEY>"
     auth_type: "bearer"
 
   zhipucloud:
     type: "anthropic"
     base_url: "https://open.bigmodel.cn/api/anthropic"
-    api_key: ""
+    api_key: "<API_KEY>"
     auth_type: "bearer"
 
 # 自定义模型配置（供 Claude Code 使用）

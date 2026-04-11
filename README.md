@@ -1,9 +1,12 @@
 # Claude Proxy
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
-[![GitHub Stars](https://img.shields.io/github/stars/Narutohaha/claude-proxy?style=social)](https://github.com/Narutohaha/claude-proxy/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/Narutohaha/claude-proxy?style=social)](https://github.com/Narutohaha/claude-proxy/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/Narutohaha/claude-proxy)](https://github.com/Narutohaha/claude-proxy/issues)
+
+[![GitHub Stars](PixPin_2026-04-11_21-06-39.png)](https://github.com/Narutohaha/claude-proxy/stargazers)
+
+[![GitHub Forks](PixPin_2026-04-11_21-06-59.png)](https://github.com/Narutohaha/claude-proxy/network/members)
+
+[![GitHub Issues](PixPin_2026-04-11_21-07-17.png)](https://github.com/Narutohaha/claude-proxy/issues)
 
 [中文文档](#中文文档)
 
@@ -142,11 +145,11 @@ The dashboard provides a clean interface to monitor your Claude Code usage and d
 
 ### Configuration Fields
 
-| Field | Description |
-|-------|-------------|
-| `name` | Custom model name for Claude Code to use |
-| `provider` | Provider name (must be defined in providers) |
-| `model` | Actual model name to call |
+| Field         | Description                                   |
+| ------------- | --------------------------------------------- |
+| `name`        | Custom model name for Claude Code to use      |
+| `provider`    | Provider name (must be defined in providers)  |
+| `model`       | Actual model name to call                     |
 | `description` | Model description (optional, displayed in UI) |
 
 ### Configuration Example
@@ -187,32 +190,33 @@ routes:
 ```
 
 Routing rules support wildcards:
+
 - `claude-*` - Matches all models starting with `claude-`
 - `*` - Matches all models (default route)
 
 ## Provider Types
 
-| Type | Description |
-|------|-------------|
-| `anthropic` | Anthropic Claude API format (passthrough) |
-| `openai` | OpenAI API format (automatic format conversion) |
+| Type        | Description                                     |
+| ----------- | ----------------------------------------------- |
+| `anthropic` | Anthropic Claude API format (passthrough)       |
+| `openai`    | OpenAI API format (automatic format conversion) |
 
 ### Authentication Methods
 
-| auth_type | Description |
-|-----------|-------------|
-| `header` | Use `x-api-key` request header (default) |
-| `bearer` | Use `Authorization: Bearer` request header |
+| auth_type | Description                                |
+| --------- | ------------------------------------------ |
+| `header`  | Use `x-api-key` request header (default)   |
+| `bearer`  | Use `Authorization: Bearer` request header |
 
 ## API Endpoints
 
-| Endpoint | Description |
-|----------|-------------|
-| `POST /v1/messages` | Claude API proxy endpoint |
-| `GET /v1/models` | Get available custom model list |
-| `GET /api/stats` | Statistics data |
-| `GET /api/requests` | Request list |
-| `GET /api/requests/:id` | Request details |
+| Endpoint                | Description                     |
+| ----------------------- | ------------------------------- |
+| `POST /v1/messages`     | Claude API proxy endpoint       |
+| `GET /v1/models`        | Get available custom model list |
+| `GET /api/stats`        | Statistics data                 |
+| `GET /api/requests`     | Request list                    |
+| `GET /api/requests/:id` | Request details                 |
 
 ## Usage Examples
 
@@ -407,12 +411,12 @@ http://localhost:3456
 
 ### 配置说明
 
-| 字段 | 说明 |
-|------|------|
-| `name` | 自定义模型名，供 Claude Code 使用 |
-| `provider` | 提供商名称（需在 providers 中定义） |
-| `model` | 实际调用的模型名 |
-| `description` | 模型描述（可选，在 UI 中显示） |
+| 字段            | 说明                      |
+| ------------- | ----------------------- |
+| `name`        | 自定义模型名，供 Claude Code 使用 |
+| `provider`    | 提供商名称（需在 providers 中定义） |
+| `model`       | 实际调用的模型名                |
+| `description` | 模型描述（可选，在 UI 中显示）       |
 
 ### 配置示例
 
@@ -458,32 +462,33 @@ routes:
 ```
 
 路由规则支持通配符：
+
 - `claude-*` - 匹配所有以 `claude-` 开头的模型
 - `*` - 匹配所有模型（默认路由）
 
 ## 提供商类型
 
-| 类型 | 说明 |
-|------|------|
+| 类型          | 说明                            |
+| ----------- | ----------------------------- |
 | `anthropic` | Anthropic Claude API 格式（直接透传） |
-| `openai` | OpenAI API 格式（自动格式转换） |
+| `openai`    | OpenAI API 格式（自动格式转换）         |
 
 ### 认证方式
 
-| auth_type | 说明 |
-|-----------|------|
-| `header` | 使用 `x-api-key` 请求头（默认） |
-| `bearer` | 使用 `Authorization: Bearer` 请求头 |
+| auth_type | 说明                             |
+| --------- | ------------------------------ |
+| `header`  | 使用 `x-api-key` 请求头（默认）         |
+| `bearer`  | 使用 `Authorization: Bearer` 请求头 |
 
 ## API 端点
 
-| 端点 | 描述 |
-|------|------|
-| `POST /v1/messages` | Claude API 代理端点 |
-| `GET /v1/models` | 获取可用的自定义模型列表 |
-| `GET /api/stats` | 统计数据 |
-| `GET /api/requests` | 请求列表 |
-| `GET /api/requests/:id` | 请求详情 |
+| 端点                      | 描述              |
+| ----------------------- | --------------- |
+| `POST /v1/messages`     | Claude API 代理端点 |
+| `GET /v1/models`        | 获取可用的自定义模型列表    |
+| `GET /api/stats`        | 统计数据            |
+| `GET /api/requests`     | 请求列表            |
+| `GET /api/requests/:id` | 请求详情            |
 
 ## 使用示例
 
