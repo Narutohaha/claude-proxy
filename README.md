@@ -1,17 +1,23 @@
 # Claude Proxy
 
+[![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
+[![GitHub Stars](https://img.shields.io/github/stars/Narutohaha/claude-proxy?style=social)](https://github.com/Narutohaha/claude-proxy/stargazers)
+[![GitHub Forks](https://img.shields.io/github/forks/Narutohaha/claude-proxy?style=social)](https://github.com/Narutohaha/claude-proxy/network/members)
+[![GitHub Issues](https://img.shields.io/github/issues/Narutohaha/claude-proxy)](https://github.com/Narutohaha/claude-proxy/issues)
+
 [中文文档](#中文文档)
 
 A Claude Code API proxy service with custom model names, multi-model routing, request analysis, and statistics monitoring.
 
 ## Features
 
-- **Custom Model Names** - Define memorable model names (e.g., `my-smart-model`) that automatically map to real models
-- **Multi-Model Routing** - Automatically route requests to different API providers based on model names
-- **Request/Response Parsing** - Parse Claude Code request structures (messages, tools, thinking, etc.)
-- **Statistics Monitoring** - Track token usage, latency, and model distribution
-- **History Records** - SQLite persistent storage for all requests
-- **Web UI** - Modern, elegant embedded dashboard with raw/parsed view toggle
+- 🏷️ **Custom Model Names** - Define memorable model names (e.g., `my-smart-model`) that automatically map to real models
+- 🔄 **Multi-Model Routing** - Automatically route requests to different API providers based on model names
+- 📊 **Request/Response Parsing** - Parse Claude Code request structures (messages, tools, thinking, etc.)
+- 📈 **Statistics Monitoring** - Track token usage, latency, and model distribution
+- 💾 **History Records** - SQLite persistent storage for all requests
+- 🖥️ **Web UI** - Modern, elegant embedded dashboard with raw/parsed view toggle
+- 🔌 **Easy Integration** - Works seamlessly with Claude Code CLI tool
 
 ## Quick Start
 

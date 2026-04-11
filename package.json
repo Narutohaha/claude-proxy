@@ -1,7 +1,7 @@
 {
   "name": "claude-proxy",
   "version": "1.0.0",
-  "description": "Claude Code API proxy with multi-model routing and analytics",
+  "description": "Claude Code API proxy service with custom model names, multi-model routing, request analysis, and statistics monitoring",
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
@@ -11,11 +11,26 @@
   },
   "keywords": [
     "claude",
+    "claude-code",
+    "anthropic",
     "proxy",
+    "api-proxy",
     "llm",
-    "anthropic"
+    "ai",
+    "openai",
+    "model-routing",
+    "middleware"
   ],
+  "author": "Narutohaha",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Narutohaha/claude-proxy.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Narutohaha/claude-proxy/issues"
+  },
+  "homepage": "https://github.com/Narutohaha/claude-proxy#readme",
   "dependencies": {
     "@hono/node-server": "^1.19.13",
     "hono": "^4.6.0",
