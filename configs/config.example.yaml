@@ -1,0 +1,76 @@
+# Claude Proxy 配置文件
+
+server:
+  host: "0.0.0.0"
+  port: 3456
+
+storage:
+  path: "./data/proxy.db"
+
+logging:
+  level: "info"
+  format: "text"
+
+# API 提供商配置
+providers:
+  anthropic:
+    type: "anthropic"
+    base_url: "https://api.anthropic.com"
+    api_key: "${ANTHROPIC_API_KEY}"
+
+  jdcloud:
+    type: "anthropic"
+    base_url: "https://modelservice.jdcloud.com/coding/anthropic"
+    api_key: "${JDCLOUD_API_KEY}"
+
+  openai:
+    type: "openai"
+    base_url: "https://api.openai.com/v1"
+    api_key: "${OPENAI_API_KEY}"
+
+  deepseek:
+    type: "openai"
+    base_url: "https://api.deepseek.com/v1"
+    api_key: "${DEEPSEEK_API_KEY}"
+
+# 自定义模型配置（供 Claude Code 使用）
+# 在 Claude Code 中配置: export ANTHROPIC_MODEL=my-smart-model
+custom_models:
+  - name: "my-smart-model"
+    provider: "jdcloud"
+    model: "claude-sonnet-4-20250514"
+    description: "智能模型 - Sonnet 4"
+
+  - name: "my-fast-model"
+    provider: "jdcloud"
+    model: "claude-3-5-haiku-20241022"
+    description: "快速模型 - Haiku 3.5"
+
+  - name: "my-thinking-model"
+    provider: "jdcloud"
+    model: "claude-sonnet-4-20250514"
+    description: "支持 Extended Thinking 的模型"
+
+  - name: "my-gpt-model"
+    provider: "openai"
+    model: "gpt-4o"
+    description: "OpenAI GPT-4o"
+
+  - name: "my-deepseek-model"
+    provider: "deepseek"
+    model: "deepseek-chat"
+    description: "DeepSeek Chat"
+
+# 路由规则（按顺序匹配，用于未在 custom_models 中定义的模型）
+routes:
+  - pattern: "claude-*"
+    provider: "jdcloud"
+
+  - pattern: "gpt-*"
+    provider: "openai"
+
+  - pattern: "deepseek-*"
+    provider: "deepseek"
+
+  - pattern: "*"
+    provider: "jdcloud"

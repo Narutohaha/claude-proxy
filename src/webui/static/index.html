@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Claude Proxy Dashboard</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div id="app">
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">Claude Proxy</span>
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-item active" data-view="dashboard">
+          <span class="icon">📊</span>
+          <span>Dashboard</span>
+        </a>
+        <a href="#" class="nav-item" data-view="requests">
+          <span class="icon">📝</span>
+          <span>Requests</span>
+        </a>
+      </nav>
+      <div class="version">v1.0.0</div>
+    </aside>
+
+    <main class="main">
+      <header class="header">
+        <h1 id="page-title">Dashboard</h1>
+        <div class="actions">
+          <button id="auto-refresh-toggle" class="btn btn-small active" title="Auto Refresh">⏱️ Auto</button>
+          <button id="clear-btn" class="btn btn-small btn-danger" title="Clear All Data">🗑️ Clear</button>
+          <button id="refresh-btn" class="btn btn-icon" title="Refresh">🔄</button>
+        </div>
+      </header>
+
+      <div id="content" class="content"></div>
+    </main>
+  </div>
+
+  <div id="modal" class="modal hidden">
+    <div class="modal-backdrop"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Request Detail</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <div class="modal-body"></div>
+    </div>
+  </div>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
