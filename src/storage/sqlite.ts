@@ -109,16 +109,17 @@ export class SQLiteStore {
     offset?: number;
     model?: string;
     provider?: string;
-    startDate?: Date;
-    endDate?: Date;
+    startDateStr?: string;
+    endDateStr?: string;
   }): RequestRecord[] {
     const conditions: string[] = [];
     const params: any[] = [];
 
     if (options.model) { conditions.push('model = ?'); params.push(options.model); }
     if (options.provider) { conditions.push('provider = ?'); params.push(options.provider); }
-    if (options.startDate) { conditions.push('timestamp >= ?'); params.push(options.startDate.toISOString()); }
-    if (options.endDate) { conditions.push('timestamp <= ?'); params.push(options.endDate.toISOString()); }
+    // 直接按时间字符串比较
+    if (options.startDateStr) { conditions.push('timestamp >= ?'); params.push(options.startDateStr + 'T00:00:00'); }
+    if (options.endDateStr) { conditions.push('timestamp <= ?'); params.push(options.endDateStr + 'T23:59:59'); }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
     const limit = options.limit || 50;
@@ -132,12 +133,13 @@ export class SQLiteStore {
     return result[0].values.map(row => this.rowToRecord(row, result[0].columns));
   }
 
-  getStats(startDate?: Date, endDate?: Date): Statistics {
+  getStats(startDateStr?: string, endDateStr?: string): Statistics {
     const conditions: string[] = [];
     const params: any[] = [];
 
-    if (startDate) { conditions.push('timestamp >= ?'); params.push(startDate.toISOString()); }
-    if (endDate) { conditions.push('timestamp <= ?'); params.push(endDate.toISOString()); }
+    // 直接按时间字符串比较
+    if (startDateStr) { conditions.push('timestamp >= ?'); params.push(startDateStr + 'T00:00:00'); }
+    if (endDateStr) { conditions.push('timestamp <= ?'); params.push(endDateStr + 'T23:59:59'); }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 
@@ -179,9 +181,9 @@ export class SQLiteStore {
     }
 
     const dailyResult = this.db.exec(`
-      SELECT DATE(timestamp) as date, COUNT(*) as requests, SUM(input_tokens + output_tokens) as tokens
+      SELECT SUBSTR(timestamp, 1, 10) as date, COUNT(*) as requests, SUM(input_tokens + output_tokens) as tokens
       FROM requests ${whereClause}
-      GROUP BY DATE(timestamp)
+      GROUP BY SUBSTR(timestamp, 1, 10)
       ORDER BY date DESC
       LIMIT 30
     `, params);

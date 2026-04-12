@@ -86,9 +86,9 @@ async function main() {
 
   // Web UI API endpoints
   app.get('/api/stats', (c) => {
-    const startDate = c.req.query('start') ? new Date(c.req.query('start') as string) : undefined;
-    const endDate = c.req.query('end') ? new Date(c.req.query('end') as string) : undefined;
-    return c.json(store.getStats(startDate, endDate));
+    const startDateStr = c.req.query('start') || undefined;
+    const endDateStr = c.req.query('end') || undefined;
+    return c.json(store.getStats(startDateStr, endDateStr));
   });
 
   app.get('/api/requests', (c) => {
@@ -96,9 +96,9 @@ async function main() {
     const offset = parseInt(c.req.query('offset') || '0');
     const model = c.req.query('model') || undefined;
     const provider = c.req.query('provider') || undefined;
-    const startDate = c.req.query('start') ? new Date(c.req.query('start') as string) : undefined;
-    const endDate = c.req.query('end') ? new Date(c.req.query('end') as string) : undefined;
-    return c.json(store.listRequests({ limit, offset, model, provider, startDate, endDate }));
+    const startDateStr = c.req.query('start') || undefined;
+    const endDateStr = c.req.query('end') || undefined;
+    return c.json(store.listRequests({ limit, offset, model, provider, startDateStr, endDateStr }));
   });
 
   app.get('/api/requests/:id', (c) => {

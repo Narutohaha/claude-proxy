@@ -183,7 +183,7 @@ body {
 
 .table-header h3 { font-size: 16px; font-weight: 600; }
 
-.filters { display: flex; gap: 12px; }
+.filters { display: flex; gap: 12px; align-items: center; }
 
 .filter-select {
   padding: 8px 12px;
@@ -192,6 +192,21 @@ body {
   border-radius: 6px;
   color: var(--text-primary);
   font-size: 13px;
+}
+
+.filter-date {
+  padding: 8px 12px;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.filter-date::-webkit-calendar-picker-indicator {
+  filter: invert(0.7);
+  cursor: pointer;
 }
 
 .requests-table { width: 100%; border-collapse: collapse; }

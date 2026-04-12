@@ -8,6 +8,13 @@ class ClaudeProxyUI {
     this.refreshInterval = null;
     this.dashboardInitialized = false;
     this.requestsInitialized = false;
+    // 保存当前过滤条件
+    this.filters = {
+      model: '',
+      provider: '',
+      startDate: '',
+      endDate: ''
+    };
     this.init();
   }
 
@@ -192,7 +199,11 @@ class ClaudeProxyUI {
           <div class="table-header">
             <h3>All Requests</h3>
             <div class="filters">
+              <input type="date" class="filter-date" id="start-date" title="Start Date">
+              <input type="date" class="filter-date" id="end-date" title="End Date">
+              <select class="filter-select" id="provider-filter"><option value="">All Providers</option></select>
               <select class="filter-select" id="model-filter"><option value="">All Models</option></select>
+              <button class="btn btn-small" id="clear-filters" title="Clear Filters">✕</button>
             </div>
           </div>
           <table class="requests-table">
@@ -205,14 +216,41 @@ class ClaudeProxyUI {
     }
 
     try {
-      const requests = await this.fetch('/api/requests?limit=100');
+      // 构建带过滤条件的请求参数
+      const params = new URLSearchParams();
+      params.append('limit', '100');
+      if (this.filters.model) params.append('model', this.filters.model);
+      if (this.filters.provider) params.append('provider', this.filters.provider);
+      if (this.filters.startDate) params.append('start', this.filters.startDate);
+      if (this.filters.endDate) params.append('end', this.filters.endDate);
+
+      const requests = await this.fetch(`/api/requests?${params.toString()}`);
       this.renderRequestRows('all-requests', requests, true);
 
-      // 只在首次加载时更新过滤器选项
       const modelFilter = document.getElementById('model-filter');
+      const providerFilter = document.getElementById('provider-filter');
+      const startDateInput = document.getElementById('start-date');
+      const endDateInput = document.getElementById('end-date');
+      const clearBtn = document.getElementById('clear-filters');
+
+      // 绑定事件（只绑定一次）
+      if (!modelFilter.dataset.bound) {
+        modelFilter.onchange = () => this.applyFilters();
+        providerFilter.onchange = () => this.applyFilters();
+        startDateInput.onchange = () => this.applyFilters();
+        endDateInput.onchange = () => this.applyFilters();
+        clearBtn.onclick = () => this.clearFilters();
+        modelFilter.dataset.bound = 'true';
+      }
+
+      // 从过滤后的结果中获取 model 和 provider 列表
       const models = [...new Set(requests.map(r => r.model))];
-      const currentOptions = Array.from(modelFilter.options).map(o => o.value);
-      if (JSON.stringify(currentOptions.slice(1).sort()) !== JSON.stringify(models.sort())) {
+      const providers = [...new Set(requests.map(r => r.provider).filter(Boolean))];
+
+      // 更新 model 下拉框选项（保留当前选中值）
+      const currentModelValue = this.filters.model;
+      const currentModelOptions = Array.from(modelFilter.options).map(o => o.value);
+      if (JSON.stringify(currentModelOptions.slice(1).sort()) !== JSON.stringify(models.sort())) {
         modelFilter.innerHTML = '<option value="">All Models</option>';
         models.forEach(model => {
           const option = document.createElement('option');
@@ -221,9 +259,26 @@ class ClaudeProxyUI {
           modelFilter.appendChild(option);
         });
       }
+      modelFilter.value = currentModelValue;
 
-      // 移除旧的事件监听器并添加新的
-      modelFilter.onchange = () => this.filterRequests(modelFilter.value);
+      // 更新 provider 下拉框选项（保留当前选中值）
+      const currentProviderValue = this.filters.provider;
+      const currentProviderOptions = Array.from(providerFilter.options).map(o => o.value);
+      if (JSON.stringify(currentProviderOptions.slice(1).sort()) !== JSON.stringify(providers.sort())) {
+        providerFilter.innerHTML = '<option value="">All Providers</option>';
+        providers.forEach(provider => {
+          const option = document.createElement('option');
+          option.value = provider;
+          option.textContent = provider;
+          providerFilter.appendChild(option);
+        });
+      }
+      providerFilter.value = currentProviderValue;
+
+      // 恢复日期选择器的值
+      startDateInput.value = this.filters.startDate;
+      endDateInput.value = this.filters.endDate;
+
     } catch (error) {
       console.error('Failed to load requests:', error);
     }
@@ -326,10 +381,37 @@ class ClaudeProxyUI {
     document.getElementById('modal')?.classList.add('hidden');
   }
 
-  async filterRequests(model) {
-    const url = model ? `/api/requests?limit=100&model=${encodeURIComponent(model)}` : '/api/requests?limit=100';
-    const requests = await this.fetch(url);
+  async applyFilters() {
+    // 保存当前过滤条件
+    this.filters.model = document.getElementById('model-filter')?.value || '';
+    this.filters.provider = document.getElementById('provider-filter')?.value || '';
+    this.filters.startDate = document.getElementById('start-date')?.value || '';
+    this.filters.endDate = document.getElementById('end-date')?.value || '';
+
+    const params = new URLSearchParams();
+    params.append('limit', '100');
+    if (this.filters.model) params.append('model', this.filters.model);
+    if (this.filters.provider) params.append('provider', this.filters.provider);
+    if (this.filters.startDate) params.append('start', this.filters.startDate);
+    if (this.filters.endDate) params.append('end', this.filters.endDate);
+
+    const requests = await this.fetch(`/api/requests?${params.toString()}`);
     this.renderRequestRows('all-requests', requests, true);
+  }
+
+  async filterRequests(model) {
+    // 保留旧方法以兼容，但使用新的 applyFilters
+    await this.applyFilters();
+  }
+
+  clearFilters() {
+    // 清除保存的过滤条件
+    this.filters = { model: '', provider: '', startDate: '', endDate: '' };
+    document.getElementById('model-filter').value = '';
+    document.getElementById('provider-filter').value = '';
+    document.getElementById('start-date').value = '';
+    document.getElementById('end-date').value = '';
+    this.applyFilters();
   }
 
   async fetch(url) {

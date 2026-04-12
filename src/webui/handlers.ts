@@ -11,9 +11,10 @@ export function createWebUIApp(store: SQLiteStore): Hono {
   const app = new Hono();
 
   app.get('/api/stats', (c) => {
-    const startDate = c.req.query('start') ? new Date(c.req.query('start') as string) : undefined;
-    const endDate = c.req.query('end') ? new Date(c.req.query('end') as string) : undefined;
-    const stats = store.getStats(startDate, endDate);
+    const startDateStr = c.req.query('start') || undefined;
+    const endDateStr = c.req.query('end') || undefined;
+
+    const stats = store.getStats(startDateStr, endDateStr);
     return c.json(stats);
   });
 
@@ -22,10 +23,10 @@ export function createWebUIApp(store: SQLiteStore): Hono {
     const offset = parseInt(c.req.query('offset') || '0');
     const model = c.req.query('model') || undefined;
     const provider = c.req.query('provider') || undefined;
-    const startDate = c.req.query('start') ? new Date(c.req.query('start') as string) : undefined;
-    const endDate = c.req.query('end') ? new Date(c.req.query('end') as string) : undefined;
+    const startDateStr = c.req.query('start') || undefined;
+    const endDateStr = c.req.query('end') || undefined;
 
-    const requests = store.listRequests({ limit, offset, model, provider, startDate, endDate });
+    const requests = store.listRequests({ limit, offset, model, provider, startDateStr, endDateStr });
     return c.json(requests);
   });
 
