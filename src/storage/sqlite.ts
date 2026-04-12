@@ -133,13 +133,15 @@ export class SQLiteStore {
     return result[0].values.map(row => this.rowToRecord(row, result[0].columns));
   }
 
-  getStats(startDateStr?: string, endDateStr?: string): Statistics {
+  getStats(startDateStr?: string, endDateStr?: string, model?: string, provider?: string): Statistics {
     const conditions: string[] = [];
     const params: any[] = [];
 
     // 直接按时间字符串比较
     if (startDateStr) { conditions.push('timestamp >= ?'); params.push(startDateStr + 'T00:00:00'); }
     if (endDateStr) { conditions.push('timestamp <= ?'); params.push(endDateStr + 'T23:59:59'); }
+    if (model) { conditions.push('model = ?'); params.push(model); }
+    if (provider) { conditions.push('provider = ?'); params.push(provider); }
 
     const whereClause = conditions.length > 0 ? `WHERE ${conditions.join(' AND ')}` : '';
 

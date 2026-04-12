@@ -13,8 +13,10 @@ export function createWebUIApp(store: SQLiteStore): Hono {
   app.get('/api/stats', (c) => {
     const startDateStr = c.req.query('start') || undefined;
     const endDateStr = c.req.query('end') || undefined;
+    const model = c.req.query('model') || undefined;
+    const provider = c.req.query('provider') || undefined;
 
-    const stats = store.getStats(startDateStr, endDateStr);
+    const stats = store.getStats(startDateStr, endDateStr, model, provider);
     return c.json(stats);
   });
 

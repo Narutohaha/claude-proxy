@@ -88,7 +88,9 @@ async function main() {
   app.get('/api/stats', (c) => {
     const startDateStr = c.req.query('start') || undefined;
     const endDateStr = c.req.query('end') || undefined;
-    return c.json(store.getStats(startDateStr, endDateStr));
+    const model = c.req.query('model') || undefined;
+    const provider = c.req.query('provider') || undefined;
+    return c.json(store.getStats(startDateStr, endDateStr, model, provider));
   });
 
   app.get('/api/requests', (c) => {

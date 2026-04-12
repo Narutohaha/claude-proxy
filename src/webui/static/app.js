@@ -206,6 +206,7 @@ class ClaudeProxyUI {
               <button class="btn btn-small" id="clear-filters" title="Clear Filters">✕</button>
             </div>
           </div>
+          <div class="filter-stats" id="filter-stats"></div>
           <table class="requests-table">
             <thead><tr><th>Time</th><th>Model</th><th>Provider</th><th>Tokens</th><th>Latency</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody id="all-requests"></tbody>
@@ -224,7 +225,18 @@ class ClaudeProxyUI {
       if (this.filters.startDate) params.append('start', this.filters.startDate);
       if (this.filters.endDate) params.append('end', this.filters.endDate);
 
-      const requests = await this.fetch(`/api/requests?${params.toString()}`);
+      // 并行获取请求列表和统计数据
+      const [requests, stats] = await Promise.all([
+        this.fetch(`/api/requests?${params.toString()}`),
+        this.fetch(`/api/stats?${params.toString()}`)
+      ]);
+
+      // 更新统计信息
+      const statsEl = document.getElementById('filter-stats');
+      if (statsEl) {
+        statsEl.innerHTML = `<span>📊 ${this.formatNumber(stats.total_requests)} requests</span><span>🔤 ${this.formatNumber(stats.total_tokens)} tokens</span>`;
+      }
+
       this.renderRequestRows('all-requests', requests, true);
 
       const modelFilter = document.getElementById('model-filter');
@@ -395,7 +407,18 @@ class ClaudeProxyUI {
     if (this.filters.startDate) params.append('start', this.filters.startDate);
     if (this.filters.endDate) params.append('end', this.filters.endDate);
 
-    const requests = await this.fetch(`/api/requests?${params.toString()}`);
+    // 并行获取请求列表和统计数据
+    const [requests, stats] = await Promise.all([
+      this.fetch(`/api/requests?${params.toString()}`),
+      this.fetch(`/api/stats?${params.toString()}`)
+    ]);
+
+    // 更新统计信息
+    const statsEl = document.getElementById('filter-stats');
+    if (statsEl) {
+      statsEl.innerHTML = `<span>📊 ${this.formatNumber(stats.total_requests)} requests</span><span>🔤 ${this.formatNumber(stats.total_tokens)} tokens</span>`;
+    }
+
     this.renderRequestRows('all-requests', requests, true);
   }
 
