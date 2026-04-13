@@ -360,6 +360,40 @@ body {
 .copy-btn:hover { opacity: 1; }
 .copy-btn.copied { background: #22c55e !important; border-color: #22c55e !important; opacity: 1; }
 
+/* Collapsible sections */
+.collapse-toggle {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+}
+
+.collapse-icon {
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+.collapsible .section-content {
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.collapsible:not(.collapsed) .section-content {
+  max-height: none;
+}
+
+.collapsible.collapsed .section-content {
+  max-height: 0;
+  margin: 0;
+  padding: 0;
+}
+
+.collapsible.collapsed .section-content * {
+  visibility: hidden;
+}
+
 /* Custom Models Section */
 .models-section {
   background: var(--bg-secondary);

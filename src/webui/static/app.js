@@ -355,6 +355,20 @@ class ClaudeProxyUI {
       btn.onclick = () => this.copyToClipboard(btn);
     });
 
+    // 绑定折叠控件事件
+    modalBody.querySelectorAll('.collapse-toggle').forEach(toggle => {
+      toggle.onclick = () => {
+        const section = toggle.closest('.collapsible');
+        if (section) {
+          section.classList.toggle('collapsed');
+          const icon = toggle.querySelector('.collapse-icon');
+          if (icon) {
+            icon.textContent = section.classList.contains('collapsed') ? '▶' : '▼';
+          }
+        }
+      };
+    });
+
     modal.classList.remove('hidden');
   }
 
@@ -375,17 +389,17 @@ class ClaudeProxyUI {
         <div class="meta-item"><label>Duration</label><div class="value">${request.duration_ms}ms</div></div>
         <div class="meta-item"><label>Status</label><div class="value">${request.error ? 'Error' : 'Success'}</div></div>
       </div>
-      ${thinking ? `<div class="section"><div class="section-header"><h4>Extended Thinking</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(thinking, null, 2))}">Copy</button></div><div class="code-block">${JSON.stringify(thinking, null, 2)}</div></div>` : ''}
-      <div class="section"><div class="section-header"><h4>Messages (${messages.length})</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(messages, null, 2))}">Copy</button></div><div class="code-block">${JSON.stringify(messages, null, 2)}</div></div>
-      ${tools.length > 0 ? `<div class="section"><div class="section-header"><h4>Tools (${tools.length})</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(tools.map(t => ({name: t.name, description: t.description})), null, 2))}">Copy</button></div><div class="code-block">${JSON.stringify(tools.map(t => ({name: t.name, description: t.description})), null, 2)}</div></div>` : ''}
-      <div class="section"><div class="section-header"><h4>Response</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(request.response_content || request.error || 'No content')}">Copy</button></div><div class="code-block" style="max-height: 300px; overflow-y: auto;">${this.escapeHtml(request.response_content || request.error || 'No content')}</div></div>
+      ${thinking ? `<div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Extended Thinking</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(thinking, null, 2))}">Copy</button></div><div class="section-content"><div class="code-block">${JSON.stringify(thinking, null, 2)}</div></div></div>` : ''}
+      <div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Messages (${messages.length})</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(messages, null, 2))}">Copy</button></div><div class="section-content"><div class="code-block">${JSON.stringify(messages, null, 2)}</div></div></div>
+      ${tools.length > 0 ? `<div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Tools (${tools.length})</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(JSON.stringify(tools.map(t => ({name: t.name, description: t.description})), null, 2))}">Copy</button></div><div class="section-content"><div class="code-block">${JSON.stringify(tools.map(t => ({name: t.name, description: t.description})), null, 2)}</div></div></div>` : ''}
+      <div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Response</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(request.response_content || request.error || 'No content')}">Copy</button></div><div class="section-content"><div class="code-block" style="max-height: 300px; overflow-y: auto;">${this.escapeHtml(request.response_content || request.error || 'No content')}</div></div></div>
     `;
   }
 
   renderRawView(request) {
     return `
-      <div class="section"><div class="section-header"><h4>Request JSON</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(this.formatJson(request.raw_request))}">Copy</button></div><div class="code-block" style="max-height: 400px; overflow-y: auto;">${this.escapeHtml(this.formatJson(request.raw_request))}</div></div>
-      <div class="section"><div class="section-header"><h4>Response JSON</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(this.formatJson(request.raw_response))}">Copy</button></div><div class="code-block" style="max-height: 400px; overflow-y: auto;">${this.escapeHtml(this.formatJson(request.raw_response))}</div></div>
+      <div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Request JSON</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(this.formatJson(request.raw_request))}">Copy</button></div><div class="section-content"><div class="code-block" style="max-height: 400px; overflow-y: auto;">${this.escapeHtml(this.formatJson(request.raw_request))}</div></div></div>
+      <div class="section collapsible collapsed"><div class="section-header"><h4 class="collapse-toggle"><span class="collapse-icon">▶</span>Response JSON</h4><button class="btn btn-small copy-btn" data-copy="${this.escapeAttr(this.formatJson(request.raw_response))}">Copy</button></div><div class="section-content"><div class="code-block" style="max-height: 400px; overflow-y: auto;">${this.escapeHtml(this.formatJson(request.raw_response))}</div></div></div>
     `;
   }
 
