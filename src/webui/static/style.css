@@ -340,7 +340,25 @@ body {
 
 .section { margin-bottom: 24px; }
 
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.section-header h4 { font-size: 14px; font-weight: 600; color: var(--text-secondary); margin: 0; }
+
 .section h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-secondary); }
+
+.copy-btn {
+  padding: 4px 10px !important;
+  font-size: 12px !important;
+  opacity: 0.7;
+}
+
+.copy-btn:hover { opacity: 1; }
+.copy-btn.copied { background: #22c55e !important; border-color: #22c55e !important; opacity: 1; }
 
 /* Custom Models Section */
 .models-section {
